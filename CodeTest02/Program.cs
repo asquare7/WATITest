@@ -1,4 +1,5 @@
 using CodeTest02.Data;
+using CodeTest02.Dtos;
 using CodeTest02.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,33 +35,12 @@ namespace CodeTest02
 
             app.UseAuthorization();
 
-            var summaries = new[]
+            app.MapPost("/Add", async (NumberDto numbers, AppDbContext context) =>
             {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-            app.MapGet("/Hello", async () => "Hello World");
-
-            //app.MapGet("/Add", async (int num1, int num2) =>
-            //{
-            //    int result = num1 + num2;
-            //    //var addActivity = new Activity();
-            //    //addActivity.Num1 = num1;
-            //    //addActivity.Num2 = num2;
-            //    //addActivity.Result = result;
-
-            //    //context.Activities.Add(addActivity);
-            //    //context.SaveChanges();
-
-            //    return result;
-            //});
-
-            app.MapGet("/Add", async (int num1, int num2, AppDbContext context) =>
-            {
-                int result = num1 + num2;
+                int result = numbers.Num1 + numbers.Num2;
                 var addActivity = new Activity();
-                addActivity.Num1 = num1;
-                addActivity.Num2 = num2;
+                addActivity.Num1 = numbers.Num1;
+                addActivity.Num2 = numbers.Num2;
                 addActivity.Result = result;
 
                 context.Activities.Add(addActivity);
